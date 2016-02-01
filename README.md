@@ -9,4 +9,4 @@ In this repo, The R script "run_analysis.R" is prepared to create a tidy dataset
 * Create a second, independent tidy data set with the average of each variable for each activity and each subject.
 
 ### Note
-The data is downloaded in a programmatically way. If the data has been downloaded manually or already exsists. you can comment the codes at the top before "Task 1".
+The data is downloaded in a programmatically way. If the data has been downloaded manually or already exsists. you can comment the codes at the top marked by "Task 0".
