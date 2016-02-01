@@ -1,4 +1,5 @@
-# Get the data: download and unzip the file
+# Task 0
+# download and unzip the file
 DataLink<-"https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip"
 download.file(DataLink,destfile="Data.zip")
 unzip(zipfile="Data.zip")   #unzipping under the current directory
@@ -26,7 +27,7 @@ DataMerge<-cbind(FeatureData,SubjectData,ActivityData)
 
 # Read names of feature variables from "feature.txt"
 Featurenames<-(read.table("./UCI HAR Dataset/features.txt",header=FALSE,stringsAsFactors=FALSE))[,2]
-names(DataMerge)<-c(Featurenames,"Subject","Activity") #Assign column names for "DataMerge"
+names(DataMerge)<-c(Featurenames,"subject","activity") #Assign column names for "DataMerge"
 
 
 # Task 2
@@ -34,7 +35,7 @@ names(DataMerge)<-c(Featurenames,"Subject","Activity") #Assign column names for 
 ##################################################################################################
 # Grep columns with names consisting of "mean()" or "std()" and also keep the last two columns of
 # "Subject" and "Activity". Totally 68 columns.
-SubDataMerge<-DataMerge[,grep("mean\\(\\)|std\\(\\)|^Subject$|^Activity$",names(DataMerge))]
+SubDataMerge<-DataMerge[,grep("mean\\(\\)|std\\(\\)|^subject$|^activity$",names(DataMerge))]
 
 
 # Task 3
@@ -43,7 +44,7 @@ SubDataMerge<-DataMerge[,grep("mean\\(\\)|std\\(\\)|^Subject$|^Activity$",names(
 # Factorize the Activity variable with activity lables in "activity_labels.txt" 
 # to make the merged data frame "SubDataMerge" more understandable
 Activity<-read.table("./UCI HAR Dataset/activity_labels.txt",header=FALSE,stringsAsFactors=FALSE)
-SubDataMerge$Activity<-factor(SubDataMerge$Activity,levels=Activity[,1],labels = Activity[,2])
+SubDataMerge$activity<-factor(SubDataMerge$activity,levels=Activity[,1],labels = Activity[,2])
 
 # Task 4
 # Appropriately label the data set "SubDataMerge" with descriptive variable names
@@ -66,5 +67,8 @@ library(reshape2)
 MeltData<-melt(SubDataMerge,id=c("subject","activity"),measure.vars = names(SubDataMerge)[1:66]) 
 CastData<-dcast(MeltData,subject+activity~variable,mean)
 CastData<-CastData[order(CastData$subject,CastData$activity),]
+
+# Task 6
+# Output the tidy data set to "Tidy_Average.txt" in the current directory
 write.table(CastData,file="Tidy_Average.txt")
 
