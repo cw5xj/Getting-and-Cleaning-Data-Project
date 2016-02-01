@@ -70,5 +70,5 @@ CastData<-CastData[order(CastData$subject,CastData$activity),]
 
 # Task 6
 # Output the tidy data set to "Tidy_Average.txt" in the current directory
-write.table(CastData,file="Tidy_Average.txt")
+write.table(CastData,file="Tidy_Average.txt",row.names=FALSE)
 
